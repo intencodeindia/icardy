@@ -8,15 +8,55 @@ use App\Models\School;
 use App\Models\Classes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentsImport;
 
 class StudentController extends Controller
 {
-    public function index($sectionId)
+    public function index($schoolId)
     {
-        $section = Section::with('class.school')->findOrFail($sectionId);
-        $students = Student::where('section_id', $sectionId)->get();
-        $schools = School::all();
-        return view('student', compact('students', 'section', 'schools'));
+        $school = School::findOrFail($schoolId);
+        $classes = Classes::where('school_id', $schoolId)->get();
+        $students = Student::whereHas('class', function($query) use ($schoolId) {
+            $query->where('school_id', $schoolId);
+        })->get();
+        
+        return view('student', compact('students', 'school', 'classes'));
+    }
+
+    public function getSections($classId)
+    {
+        $sections = Section::where('class_id', $classId)->get();
+        return response()->json($sections);
+    }
+
+    public function importStudents(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+            'class_id' => 'required|exists:classes,id',
+            'section_id' => 'nullable|exists:sections,id',
+            'school_id' => 'required|exists:schools,id'
+        ]);
+
+        try {
+            $class = Classes::findOrFail($request->class_id);
+            
+            // Verify class belongs to the correct school
+            if ($class->school_id != $request->school_id) {
+                return redirect()->back()->with('error', 'Invalid class selected');
+            }
+
+            Excel::import(new StudentsImport(
+                $request->class_id,
+                $request->section_id
+            ), $request->file('file'));
+
+            return redirect()->back()->with('success', 'Students imported successfully');
+        } catch (\Exception $e) {
+            \Log::error('Student Import Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error importing students. Please check the file format.');
+        }
     }
 
     public function store(Request $request)
@@ -31,28 +71,37 @@ class StudentController extends Controller
             'blood_group' => 'nullable|string|max:10',
             'phone_number' => 'required|string|max:15',
             'gender' => 'required|in:male,female,other',
-            'school_id' => 'required|exists:schools,id',
             'class_id' => 'required|exists:classes,id',
-            'section_id' => 'required|exists:sections,id',
+            'section_id' => 'nullable|exists:sections,id',
         ]);
 
-        // Verify that the selected class belongs to the selected school
-        $class = Classes::where('id', $request->class_id)
-            ->where('school_id', $request->school_id)
-            ->firstOrFail();
-
-        // Verify that the selected section belongs to the selected class
-        $section = Section::where('id', $request->section_id)
-            ->where('class_id', $request->class_id)
-            ->firstOrFail();
+        // Verify class belongs to the correct school
+        $class = Classes::findOrFail($request->class_id);
+        if ($class->school_id != $request->school_id) {
+            return redirect()->back()->with('error', 'Invalid class selected');
+        }
 
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('students/photos', 'public');
         }
 
+        // Parse the date before saving
+        $validated['date_of_birth'] = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
+
         Student::create($validated);
 
         return redirect()->back()->with('success', 'Student created successfully');
+    }
+
+    public function downloadTemplate()
+    {
+        $filePath = public_path('assets/files/student_template.xlsx');
+        
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'Template file not found');
+        }
+        
+        return response()->download($filePath, 'student_template.xlsx');
     }
 
     public function update(Request $request, $id)

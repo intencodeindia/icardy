@@ -6,18 +6,31 @@
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
 			<li class="breadcrumb-item"><a href="{{ route('schools') }}">Schools</a></li>
-			<li class="breadcrumb-item"><a href="{{ route('classes', $section->class->school_id) }}">Classes</a></li>
-			<li class="breadcrumb-item"><a href="{{ route('sections', $section->class_id) }}">Sections</a></li>
 			<li class="breadcrumb-item active">Students</li>
 		</ol>
 	</div>
 	<div class="col-sm-6 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-		<button type="button" class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#add-student-modal">Add Student</button>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary btn-sm mb-2 dropdown-toggle" data-bs-toggle="dropdown">
+				Add Students
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add-student-modal">
+					Manual Entry
+				</a>
+				<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#import-students-modal">
+					Import from Excel/CSV
+				</a>
+				<a class="dropdown-item" href="{{ route('students.template.download') }}">
+					Download Template
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="row">
-	@if(session('success'))
+ 	@if(session('success'))
 	<div class="alert alert-success">
 		{{ session('success') }}
 	</div>
@@ -185,36 +198,37 @@
 				<div class="modal-body">
 					<form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
 						@csrf
+						<input type="hidden" name="school_id" value="{{ $school->id }}">
+						
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="form-group mb-3">
 									<label>School</label>
-									<select name="school_id" id="school_id" class="form-control" required>
-										<option value="">Select School</option>
-										@foreach($schools as $school)
-											<option value="{{ $school->id }}">{{ $school->name }}</option>
+									<input type="text" class="form-control" value="{{ $school->name }}" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group mb-3">
+									<label>Class</label>
+									<select name="class_id" id="add_class_id" class="form-control" required>
+										<option value="">Select Class</option>
+										@foreach($classes as $class)
+											<option value="{{ $class->id }}">{{ $class->name }}</option>
 										@endforeach
 									</select>
 								</div>
 							</div>
-							<div class="col-md-4">
+						</div>
+						
+						<div class="row">
+							<div class="col-md-6">
 								<div class="form-group mb-3">
-									<label>Class</label>
-									<select name="class_id" id="class_id" class="form-control" required disabled>
-										<option value="">Select Class</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group mb-3">
-									<label>Section</label>
-									<select name="section_id" id="section_id" class="form-control" required disabled>
+									<label>Section (Optional)</label>
+									<select name="section_id" id="add_section_id" class="form-control">
 										<option value="">Select Section</option>
 									</select>
 								</div>
 							</div>
-						</div>
-						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group mb-3">
 									<label>Registration Number</label>
@@ -227,8 +241,6 @@
 									<input type="text" name="name" class="form-control" required>
 								</div>
 							</div>
-						</div>
-						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group mb-3">
 									<label>Father's Name</label>
@@ -241,8 +253,6 @@
 									<input type="text" name="phone_number" class="form-control" required>
 								</div>
 							</div>
-						</div>
-						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group mb-3">
 									<label>Date of Birth</label>
@@ -255,8 +265,6 @@
 									<input type="text" name="blood_group" class="form-control">
 								</div>
 							</div>
-						</div>
-						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group mb-3">
 									<label>Gender</label>
@@ -273,14 +281,70 @@
 									<input type="file" name="photo" class="form-control" accept="image/*">
 								</div>
 							</div>
+							<div class="form-group mb-3">
+								<label>Address</label>
+								<textarea name="address" class="form-control" required></textarea>
+							</div>
+							<div class="modal-footer px-0 pb-0">
+								<button type="button" class="btn btn-sm btn-danger light" data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-sm btn-primary">Save Student</button>
+							</div>
 						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Import Students Modal -->
+	<div class="modal fade" id="import-students-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Import Students</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data">
+						@csrf
+						<input type="hidden" name="school_id" value="{{ $school->id }}">
+						
 						<div class="form-group mb-3">
-							<label>Address</label>
-							<textarea name="address" class="form-control" required></textarea>
+							<label>School</label>
+							<input type="text" class="form-control" value="{{ $school->name }}" readonly>
 						</div>
+						
+						<div class="form-group mb-3">
+							<label>Class</label>
+							<select name="class_id" id="class_id" class="form-control" required>
+								<option value="">Select Class</option>
+								@foreach($classes as $class)
+									<option value="{{ $class->id }}">{{ $class->name }}</option>
+								@endforeach
+							</select>
+						</div>
+						
+						<div class="form-group mb-3">
+							<label>Section (Optional)</label>
+							<select name="section_id" id="section_id" class="form-control">
+								<option value="">Select Section</option>
+							</select>
+						</div>
+
+						<div class="form-group mb-3">
+							<label>Excel/CSV File</label>
+							<input type="file" name="file" class="form-control" required accept=".xlsx,.csv">
+							<small class="text-muted">
+								<a href="{{ route('students.template.download') }}" class="text-primary">
+									<i class="fas fa-download"></i> Download Template
+								</a><br>
+								Please follow the template format exactly. Required fields: registration_number, name, father_name, address, date_of_birth (YYYY-MM-DD), phone_number, gender (male/female/other)
+							</small>
+						</div>
+
 						<div class="modal-footer px-0 pb-0">
 							<button type="button" class="btn btn-sm btn-danger light" data-bs-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-sm btn-primary">Save Student</button>
+							<button type="submit" class="btn btn-sm btn-primary">Import Students</button>
 						</div>
 					</form>
 				</div>
@@ -290,56 +354,34 @@
 </div>
 
 @push('scripts')
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
-	// When school is selected
-	$('#school_id').change(function() {
-		console.log('School selected');
-		var schoolId = $(this).val();
-		if(schoolId) {
-			// Enable class dropdown
-			$('#class_id').prop('disabled', false);
-			
-			// Fetch classes for selected school
-			$.ajax({
-				url: '/api/schools/' + schoolId + '/classes',
-				type: 'GET',
-				success: function(data) {
-					console.log(data);	
-					$('#class_id').empty().append('<option value="">Select Class</option>');
-					$.each(data, function(key, value) {
-						$('#class_id').append('<option value="'+ value.id +'">'+ value.name +'</option>');
-					});
-				}
-			});
-		} else {
-			$('#class_id').prop('disabled', true).empty().append('<option value="">Select Class</option>');
-			$('#section_id').prop('disabled', true).empty().append('<option value="">Select Section</option>');
-		}
+	// For import modal
+	$('#class_id').change(function() {
+		loadSections($(this).val(), '#section_id');
 	});
 
-	// When class is selected
-	$('#class_id').change(function() {
-		var classId = $(this).val();
+	// For add student modal
+	$('#add_class_id').change(function() {
+		loadSections($(this).val(), '#add_section_id');
+	});
+
+	function loadSections(classId, targetSelect) {
 		if(classId) {
-			// Enable section dropdown
-			$('#section_id').prop('disabled', false);
-			
-			// Fetch sections for selected class
 			$.ajax({
 				url: '/api/classes/' + classId + '/sections',
 				type: 'GET',
 				success: function(data) {
-					$('#section_id').empty().append('<option value="">Select Section</option>');
+					$(targetSelect).empty().append('<option value="">Select Section</option>');
 					$.each(data, function(key, value) {
-						$('#section_id').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+						$(targetSelect).append('<option value="'+ value.id +'">'+ value.name +'</option>');
 					});
 				}
 			});
 		} else {
-			$('#section_id').prop('disabled', true).empty().append('<option value="">Select Section</option>');
+			$(targetSelect).empty().append('<option value="">Select Section</option>');
 		}
-	});
+	}
 });
 </script>
 @endpush

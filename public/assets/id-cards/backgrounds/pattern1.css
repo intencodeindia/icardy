@@ -1,0 +1,12 @@
+.id-card-bg {
+    background-color: #ffffff;
+    background-image: 
+        linear-gradient(30deg, #f0f0f0 12%, transparent 12.5%, transparent 87%, #f0f0f0 87.5%, #f0f0f0),
+        linear-gradient(150deg, #f0f0f0 12%, transparent 12.5%, transparent 87%, #f0f0f0 87.5%, #f0f0f0),
+        linear-gradient(30deg, #f0f0f0 12%, transparent 12.5%, transparent 87%, #f0f0f0 87.5%, #f0f0f0),
+        linear-gradient(150deg, #f0f0f0 12%, transparent 12.5%, transparent 87%, #f0f0f0 87.5%, #f0f0f0),
+        linear-gradient(60deg, #f8f8f8 25%, transparent 25.5%, transparent 75%, #f8f8f8 75%, #f8f8f8),
+        linear-gradient(60deg, #f8f8f8 25%, transparent 25.5%, transparent 75%, #f8f8f8 75%, #f8f8f8);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+} 

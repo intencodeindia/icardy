@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .id-card-template {
+            width: 3.375in;
+            height: 5.25in;
+            position: relative;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .header-stripe {
+            height: 0.75in;
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .logo-area {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 0.5in;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-area {
+            width: 120px;
+            height: 150px;
+            border: 3px solid #2196F3;
+            position: absolute;
+            top: 1.5in;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .details-area {
+            position: absolute;
+            top: 3.25in;
+            left: 0.25in;
+            right: 0.25in;
+        }
+
+        .footer-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1in;
+            background: #f5f5f5;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0.25in;
+        }
+    </style>
+</head>
+<body>
+    <div class="id-card-template">
+        <div class="header-stripe"></div>
+        <div class="logo-area">
+            <!-- School Logo: 80x80 -->
+        </div>
+        <div class="photo-area">
+            <!-- Student Photo: 120x150 -->
+        </div>
+        <div class="details-area">
+            <!-- Student Details -->
+        </div>
+        <div class="footer-area">
+            <div class="signature">
+                <!-- Principal Signature: 120x40 -->
+            </div>
+            <div class="stamp">
+                <!-- School Stamp: 60x60 -->
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('blood_group')->nullable();
             $table->string('phone_number');
             $table->enum('gender', ['male', 'female', 'other']);
-            $table->foreignId('section_id')->constrained('sections')->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
+            $table->foreignId('section_id')->nullable()->constrained('sections')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

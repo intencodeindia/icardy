@@ -26,6 +26,13 @@ class Student extends Model
 
     protected $dates = ['date_of_birth'];
 
+    protected $casts = [
+        'date_of_birth' => 'date',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
     public function section()
     {
         return $this->belongsTo(Section::class);
@@ -33,6 +40,6 @@ class Student extends Model
 
     public function class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\IdCardController;
 use App\Models\Classes; 
 use App\Models\Section;
 use Illuminate\Support\Facades\Route;
@@ -47,9 +48,9 @@ Route::put('/sections/{section}', [SectionController::class, 'update'])->name('s
 Route::delete('/sections/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
 
 // Print ID Card route
-Route::get('/print-id-card', function () {
-    return view('print-id-card');
-})->name('print-id-card');
+Route::get('/print-id-card', [IdCardController::class, 'index'])->name('print-id-card');
+
+Route::post('/id-card/settings', [IdCardController::class, 'store'])->name('id-card.settings');
 
 // Settings route
 Route::get('/settings', function () {
@@ -72,7 +73,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Student routes
-Route::get('/sections/{section}/students', [StudentController::class, 'index'])->name('students');
+Route::get('/students/template', [StudentController::class, 'downloadTemplate'])->name('students.template.download');
+Route::get('/students/{school_id}', [StudentController::class, 'index'])->name('students');
+Route::post('/students/import', [StudentController::class, 'importStudents'])->name('students.import');
 Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
 Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
@@ -83,8 +86,8 @@ Route::get('/api/schools/{school}/classes', function($schoolId) {
     return response()->json($classes);
 });
 
-Route::get('/api/classes/{class}/sections', function($classId) {
-    return Section::where('class_id', $classId)->get();
-});
+Route::get('/api/classes/{class}/sections', [StudentController::class, 'getSections']);
+
+Route::get('/api/students/filter', [IdCardController::class, 'filterStudents'])->name('students.filter');
 
 require __DIR__.'/auth.php';
