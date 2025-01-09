@@ -90,4 +90,24 @@ Route::get('/api/classes/{class}/sections', [StudentController::class, 'getSecti
 
 Route::get('/api/students/filter', [IdCardController::class, 'filterStudents'])->name('students.filter');
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Admin only routes
+});
+
+Route::middleware(['auth', 'role:school_admin'])->group(function () {
+    // School admin routes
+});
+
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+    // Teacher routes
+});
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+    // Student routes
+});
+
+Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
+    ->middleware(['auth'])
+    ->name('profile.password.update');
+
 require __DIR__.'/auth.php';

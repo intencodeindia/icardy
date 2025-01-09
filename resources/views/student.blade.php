@@ -39,7 +39,7 @@
 	@if($students->count() > 0)
 		@foreach($students as $student)
 		<div class="col-xl-3 col-lg-3 col-md-6">
-			<div class="card kanbanPreview-bx h-100">
+			<div class="card shadow-sm bg-white px-3 kanbanPreview-bx h-100">
 				<div class="card-body">
 					<!-- Student Photo -->
 					<div class="text-center mb-3">
@@ -70,13 +70,13 @@
 						</div>
 					</div>
 					<!-- Actions -->
-					<div class="text-center mt-3">
-						<button type="button" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#edit-student-modal-{{ $student->id }}">
-							<i class="fa fa-edit me-2"></i>Edit
-						</button>
-						<button type="button" class="btn btn-danger btn-sm" onclick="event.preventDefault(); document.getElementById('delete-student-{{ $student->id }}').submit();">
-							<i class="fa fa-trash me-2"></i>Delete
-						</button>
+					<div class="text-end mt-3">
+						<a type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#edit-student-modal-{{ $student->id }}">
+							<i class="fa fa-edit me-2"></i>
+						</a>
+						<a type="button" class="text-danger" onclick="event.preventDefault(); document.getElementById('delete-student-{{ $student->id }}').submit();">
+							<i class="fa fa-trash"></i>
+						</a>
 						<form id="delete-student-{{ $student->id }}" action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-none">
 							@csrf
 							@method('DELETE')

@@ -52,6 +52,7 @@
     </div>
 
     <!-- Required vendors -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="{{ asset('assets/js/global.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/chart.js/Chart.bundle.min.js') }}"></script>

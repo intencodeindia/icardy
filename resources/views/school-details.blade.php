@@ -22,8 +22,11 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="card-title">{{ $school->name }}</h4>
+				 <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#edit-school-modal-{{ $school->id }}">
+                                <i class="fa fa-edit text-dark bg-transparent"></i>Edit School
+                            </a>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -75,19 +78,17 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('classes', $school->id) }}" class="btn btn-sm btn-primary me-2">
+                            <a href="{{ route('classes', $school->id) }}" class="btn btn-sm btn-success me-2">
                                 <i class="fa fa-plus me-2"></i>Add Class
                             </a>
-							<a href="{{ route('students', $school->id) }}" class="btn btn-sm btn-primary me-2">
+							<a href="{{ route('students', $school->id) }}" class="btn btn-sm btn-info me-2">
                                 <i class="fa fa-plus me-2"></i>Add Student
                             </a>
 
-                            <a href="{{ route('schools') }}" class="btn btn-sm btn-primary me-2">
+                            <a href="{{ route('schools') }}" class="btn btn-sm btn-warning me-2">
                                 <i class="fa fa-arrow-left me-2"></i>Back to Schools
                             </a>
-                            <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#edit-school-modal-{{ $school->id }}">
-                                <i class="fa fa-edit me-2"></i>Edit School
-                            </a>
+                           
                         </div>
                     </div>
                 </div>
