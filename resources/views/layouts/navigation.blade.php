@@ -1,6 +1,6 @@
 <div class="nav-header">
     <a href="{{ route('dashboard') }}" class="brand-logo">
-      <img src="{{ asset('assets/images/icardy-logo.png') }}" alt="" width="85" height="27">
+      <img src="{{ asset('assets/images/logo/logo-idikaatti.png') }}" alt="" width="140" height="60">
        
     </a>
 
@@ -11,25 +11,13 @@
     </div>
 </div>
 
-
-<!--**********************************
-            Chat box End
-        ***********************************-->
-
-<!--**********************************
-            Header start
-        ***********************************-->
 <div class="header">
     <div class="header-content">
         <nav class="navbar navbar-expand">
             <div class="collapse navbar-collapse justify-content-between">
-                <div class="header-left">
-                   
+                <div class="header-left">   
                 </div>
                 <ul class="navbar-nav header-right">
-
-
-
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                             <div class="header-info">
@@ -53,7 +41,6 @@
                                     <line x1="21" y1="12" x2="9" y2="12"></line>
                                 </svg>
                                 <span class="ms-2" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout </span>
-                                
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -63,8 +50,5 @@
                 </ul>
             </div>
         </nav>
-
-
-
     </div>
 </div>
