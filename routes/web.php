@@ -6,6 +6,7 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\IdCardController;
+use App\Http\Controllers\PageController;
 use App\Models\Classes; 
 use App\Models\Section;
 use Illuminate\Support\Facades\Route;
@@ -109,5 +110,17 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
     ->middleware(['auth'])
     ->name('profile.password.update');
+
+// Footer Pages
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/features', [PageController::class, 'features'])->name('features');
+Route::get('/pricing', [PageController::class, 'pricing'])->name('pricing');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/help-center', [PageController::class, 'helpCenter'])->name('help.center');
+Route::get('/documentation', [PageController::class, 'documentation'])->name('documentation');
+Route::get('/api-reference', [PageController::class, 'apiReference'])->name('api.reference');
+Route::get('/status', [PageController::class, 'status'])->name('status');
+Route::get('/privacy-policy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/terms-of-service', [PageController::class, 'terms'])->name('terms');
 
 require __DIR__.'/auth.php';
