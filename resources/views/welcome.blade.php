@@ -183,7 +183,9 @@
 			<div class="row g-4">
 				<div class="col-md-4">
 					<div class="card-type-item">
-						<img src="{{ asset('images/student-card.png') }}" alt="Student ID" class="img-fluid mb-3">
+					<div class="feature-icon d-flex align-items-center justify-content-center bg-info-soft">
+							<i class="fas fa-user-graduate"></i>
+						</div>
 						<h4>Student ID Cards</h4>
 						<ul>
 							<li>Class & Section Information</li>
@@ -194,7 +196,9 @@
 				</div>
 				<div class="col-md-4">
 					<div class="card-type-item">
-						<img src="{{ asset('images/faculty-card.png') }}" alt="Faculty ID" class="img-fluid mb-3">
+						<div class="feature-icon d-flex align-items-center justify-content-center bg-success-soft">
+							<i class="fas fa-user-tie"></i>
+						</div>
 						<h4>Faculty ID Cards</h4>
 						<ul>
 							<li>Department Details</li>
@@ -205,7 +209,10 @@
 				</div>
 				<div class="col-md-4">
 					<div class="card-type-item">
-						<img src="{{ asset('images/staff-card.png') }}" alt="Staff ID" class="img-fluid mb-3">
+						
+						<div class="feature-icon d-flex align-items-center justify-content-center bg-info-soft">
+							<i class="fas fa-user-shield"></i>
+						</div>
 						<h4>Staff ID Cards</h4>
 						<ul>
 							<li>Role-based Access</li>
@@ -215,6 +222,25 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</section>
+	<section class="process-section py-5 bg-light">
+		<div class="container">
+			<div class="section-header text-center mb-5">
+				<h6 class="text-primary fw-bold text-uppercase">How it works</h6>
+				<h2 class="display-5 fw-bold">Easy and Fast</h2>
+				<p class="lead text-muted">Customized ID cards for different user categories</p>
+			</div>
+			<div class="row g-4">
+				<div class="col-md-3">
+					<div class="process-item">
+						<i class="fas fa-user-graduate"></i>
+						<h4>Step 1</h4>
+						<p>Create an account</p>
+					</div>
+				</div>
+			</div>
+		
 		</div>
 	</section>
 

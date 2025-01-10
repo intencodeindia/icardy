@@ -42,11 +42,11 @@
 			<div class="card shadow-sm bg-white px-3 kanbanPreview-bx h-100">
 				<div class="card-body">
 					<!-- Student Photo -->
-					<div class="text-center mb-3">
+					<div class="text-center my-3">
 						@if($student->photo)
-							<img src="{{ asset('storage/'.$student->photo) }}" alt="{{ $student->name }}" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
+							<img src="{{ asset('storage/'.$student->photo) }}" alt="{{ $student->name }}" class="rounded-0" style="width: 80px; height: 80px; object-fit: cover;">
 						@else
-							<img src="{{ asset('assets/images/avatar.png') }}" alt="Default Avatar" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
+							<img src="{{ asset('assets/images/avatar.png') }}" alt="Default Avatar" class="rounded-0" style="width: 80px; height: 80px; object-fit: cover;">
 						@endif
 					</div>
 					<!-- Student Info -->

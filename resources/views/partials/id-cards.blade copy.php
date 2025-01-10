@@ -14,10 +14,10 @@
             <!-- Top Header with Logo and Stripe -->
             <div class="card-header">
                 <div class="diagonal-stripe"></div>
-                <img src="{{ asset('storage/'.$student->school_logo) }}" 
+                <img src="{{ asset('storage/'.$school->logo) }}" 
                      alt="School Logo" 
                      class="school-logo">
-                <div class="school-name">{{ $student->school_name }}</div>
+                <div class="school-name">{{ $school->name }}</div>
             </div>
 
             <!-- Student Details Section -->
@@ -38,7 +38,7 @@
             </div>
 
             <!-- Student Name -->
-            <!-- <div class="student-name">{{ $student->name }}</div> -->
+            <div class="student-name">{{ $student->name }}</div>
 
             <!-- Student Info -->
             <div class="student-info">
@@ -47,11 +47,6 @@
                         <span class="label">Reg No</span>
                         <span class="separator">:</span>
                         <span class="value">{{ $student->registration_number }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Name</span>
-                        <span class="separator">:</span>
-                        <span class="value">{{ $student->name }}</span>
                     </div>
                     <div class="info-row">
                         <span class="label">Father's Name</span>
@@ -68,38 +63,20 @@
                         <span class="separator">:</span>
                         <span class="value">{{ optional($student->date_of_birth)->format('d/m/Y') ?? 'N/A' }}</span>
                     </div>
-                    <div class="info-row">
-                        <span class="label">Phone</span>
-                        <span class="separator">:</span>
-                        <span class="value">{{ $student->phone_number ?? 'N/A' }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Gender</span>
-                        <span class="separator">:</span>
-                        <span class="value">{{ $student->gender ?? 'N/A' }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Blood Group</span>
-                        <span class="separator">:</span>
-                        <span class="value">{{ $student->blood_group ?? 'N/A' }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Address</span>
-                        <span class="separator">:</span>
-                        <span class="value">{{ $student->address ?? 'N/A' }}</span>
-                    </div>
                 </div>
             </div>
-            <div class="signature-section">
-                <img src="{{ asset('storage/'.$school->principle_sign) }}"
-                     alt="Principal Signature" 
-                     class="signature-image">
-                <p class="signature-label">Principal's Signature</p>
-            </div>
-          
-            <div class="school-address text-center p-1">{{ $student->school_address }}</div>
 
-            
+            <!-- Footer with Signature -->
+            <div class="card-footer">
+                <div class="signature-section">
+                    <img src="{{ asset('storage/'.$school->principle_sign) }}"
+                         alt="Principal Signature" 
+                         class="signature-image">
+                    <p class="signature-label">Principal's Signature</p>
+                </div>
+              
+                <div class="school-address">{{ $school->address }}</div>
+            </div>
         </div>
     </div>
 </div>
@@ -131,7 +108,7 @@
 
 .card-header {
     position: relative;
-    height: 0.3in;
+    height: 0.6in;
     background: var(--crm-primary);
     overflow: hidden;
 }
@@ -148,8 +125,8 @@
 
 .school-logo {
     position: absolute;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     top: 50%;
     left: 10px;
     transform: translate(0%, -50%);
@@ -171,16 +148,13 @@
 
 .card-content {
     display: flex;
-    justify-content:center;
+    justify-content: space-between;
     gap: 0.1in;
-    padding-top: 0.03in;
-    padding-right: 0.03in;
-    padding-bottom: 0.03in;
 }
 
 .qr-section {
-    width: 0.6in;
-    height: 0.6in;
+    width: 0.7in;
+    height: 0.7in;
 }
 
 .qr-code {
@@ -190,8 +164,8 @@
 }
 
 .photo-section {
-    width: 0.6in;
-    height: 0.6in;
+    width: 0.7in;
+    height: 0.85in;
 }
 
 .student-photo {
@@ -214,23 +188,20 @@
 
 
 .info-grid {
+    display: flex;
     flex-direction: column;
-    padding-left: 0in;
+    gap: 2px;
 }
 
 .info-row {
     display: flex;
-    line-height: 1;
-    font-size: 10px;
-    align-items: left;
+    line-height: 1.2;
 }
 
 .label {
-    width: 1.03in;
+    width: 0.6in;
     color: var(--crm-secondary);
-    font-size: 10px;
     font-weight: 500;
-    text-align: left;
 }
 
 .separator {
@@ -241,8 +212,6 @@
 .value {
     flex: 1;
     color: var(--crm-dark);
-    font-size: 10px;
-    text-align: left;
 }
 
 .card-footer {
@@ -255,8 +224,7 @@
 .signature-section {
     display: flex;
     flex-direction: column;
-    align-items: end;
-    padding-right: 0.1in;
+    align-items: center;
 }
 
 .signature-image {
@@ -266,7 +234,7 @@
 }
 
 .signature-label {
-    font-size: 6px;
+    font-size: 5px;
     color: #666;
     margin: 2px 0 0 0;
 }
@@ -275,8 +243,6 @@
     font-size: 8px;
     color: white;
     line-height: 1.2;
-    padding: 0in;
-    background: var(--crm-primary);
 }
 
 @media print {

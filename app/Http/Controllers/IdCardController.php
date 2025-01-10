@@ -11,7 +11,11 @@ class IdCardController extends Controller
     public function index()
     {
         $schools = School::all();
-        $students = Student::with(['class.school', 'section'])->get();
+        $students = Student::select('students.*', 'schools.name as school_name', 'schools.logo as school_logo', 'schools.address as school_address')
+            ->join('classes', 'students.class_id', '=', 'classes.id')
+            ->join('schools', 'classes.school_id', '=', 'schools.id')
+            ->with(['class.school', 'section'])
+            ->get();
         return view('print-id-card', compact('schools', 'students'));
     }
 

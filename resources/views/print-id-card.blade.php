@@ -9,11 +9,7 @@
 	</div>
 	<div class="col-sm-6 p-md-0 justify-content-end mt-2 mt-sm-0 d-flex">
 		<div class="d-flex gap-2">
-			<select class="form-control" id="card_size">
-				<option value="cr80">CR80 (Standard)</option>
-				<option value="vertical">Vertical (Large)</option>
-			</select>
-			<button type="button" class="btn btn-primary" onclick="printIDCards()">
+			<button type="button" class="btn btn-primary" id="printButton">
 				<i class="fas fa-print"></i> Print Cards
 			</button>
 		</div>
@@ -65,171 +61,54 @@
 <!-- ID Cards Print Area -->
 <div class="id-cards-print-area">
 	<div class="row" id="id-cards-container">
-		@include('partials.id-cards') <!-- Include student ID cards partial -->
+		@include('partials.id-cards')
 	</div>
 </div>
 
 @push('styles')
 <style>
-/* Base Card Styles */
-.id-card {
-	width: 3.375in; /* Default size for CR80 */
-	height: 2.125in;
-	background: #fff;
-	border: 1px solid #cc0000;
-	position: relative;
-	overflow: hidden;
-	margin: 10px;
-	padding: 0.1in;
-}
-
-.id-card.vertical {
-	width: 2.125in; /* Large size for vertical */
-	height: 3.375in;
-}
-
-.id-card .header {
-	background: linear-gradient(to right, #cc0000 0%, #990000 100%);
-	margin: -0.1in -0.1in 0.15in -0.1in;
-	padding: 0.1in;
-	display: flex;
-	align-items: center;
-}
-
-.id-card .school-logo {
-	width: 0.5in;
-	height: 0.5in;
-	background: white;
-	border-radius: 50%;
-	padding: 0.05in;
-	margin-right: 0.1in;
-}
-
-.id-card .school-info {
-	flex: 1;
-}
-
-.id-card .school-name {
-	color: white;
-	font-size: 0.14in;
-	font-weight: bold;
-	margin: 0;
-	text-transform: uppercase;
-	line-height: 1.2;
-}
-
-.id-card .school-address {
-	color: rgba(255,255,255,0.9);
-	font-size: 0.08in;
-	margin: 0.02in 0 0;
-	line-height: 1.2;
-}
-
-.id-card .content {
-	display: flex;
-	gap: 0.15in;
-}
-
-.id-card .photo-container {
-	width: 0.9in;
-}
-
-.id-card .student-photo {
-	width: 0.9in;
-	height: 1.1in;
-	border: 2px solid #cc0000;
-	overflow: hidden;
-	background: #fff;
-}
-
-.id-card .student-photo img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.id-card .details {
-	flex: 1;
-	font-size: 0.1in;
-}
-
-.id-card .student-name {
-	font-weight: bold;
-	color: #cc0000;
-	font-size: 0.12in;
-	margin-bottom: 0.05in;
-	text-transform: uppercase;
-}
-
-.id-card .info-table {
-	width: 100%;
-	border-spacing: 0;
-	border-collapse: collapse;
-}
-
-.id-card .info-table td {
-	padding: 0.02in 0;
-	line-height: 1.3;
-	vertical-align: top;
-}
-
-.id-card .info-table td:first-child {
-	width: 0.8in;
-	color: #666;
-	font-weight: 500;
-}
-
-.id-card .footer {
-	position: absolute;
-	bottom: 0.1in;
-	left: 0.1in;
-	right: 0.1in;
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	border-top: 1px solid #eee;
-	padding-top: 0.05in;
-}
-
-.id-card .signature {
-	text-align: center;
-}
-
-.id-card .signature img {
-	height: 0.3in;
-	max-width: 1in;
-	object-fit: contain;
-}
-
-.id-card .signature-label {
-	font-size: 0.07in;
-	color: #666;
-	margin-top: 0.02in;
-}
-
-/* Print Styles */
 @media print {
 	@page {
-		size: A4;
-		margin: 0.5cm;
+		size: 3.375in 2.125in landscape;
+		margin: 0;
+	}
+	
+	html, body {
+		margin: 0;
+		padding: 0;
+		width: 3.375in;
+		height: 2.125in;
 	}
 	
 	.no-print {
 		display: none !important;
 	}
 	
-	.id-card {
-		page-break-inside: avoid;
-		margin: 0.125in;
-		box-shadow: none;
-		-webkit-print-color-adjust: exact;
-		print-color-adjust: exact;
+	.id-cards-print-area {
+		padding: 0;
 	}
-
-	.col-md-4 {
-		width: 33.33%;
-		float: left;
-		padding: 0.125in;
+	
+	.row {
+		display: block;
+	}
+	
+	.col-md-3 {
+		width: 100% !important;
+		padding: 0 !important;
+		float: none !important;
+		page-break-after: always;
+	}
+	
+	.id-card {
+		margin: 0 !important;
+		box-shadow: none !important;
+		border-radius: 0 !important;
+	}
+	
+	* {
+		-webkit-print-color-adjust: exact !important;
+		print-color-adjust: exact !important;
+		color-adjust: exact !important;
 	}
 }
 </style>
@@ -237,18 +116,36 @@
 
 @push('scripts')
 <script>
-function printIDCards() {
-	window.print();
-}
-
-$(document).ready(function() {
-	// Card size switching
-	$('#card_size').change(function() {
-		const size = $(this).val();
-		$('.id-card').removeClass('cr80 vertical').addClass(size);
+document.addEventListener('DOMContentLoaded', function() {
+	// Print functionality
+	document.getElementById('printButton').addEventListener('click', function() {
+		const printStyle = document.createElement('style');
+		printStyle.innerHTML = `
+			@page {
+				size: 3.375in 2.125in landscape;
+				margin: 0;
+			}
+			@media print {
+				html, body {
+					width: 3.375in;
+					height: 2.125in;
+				}
+				.id-card {
+					page-break-after: always;
+				}
+			}
+		`;
+		document.head.appendChild(printStyle);
+		
+		window.print();
+		
+		// Remove the style after printing
+		setTimeout(() => {
+			document.head.removeChild(printStyle);
+		}, 1000);
 	});
 
-	// School filter change
+	// Filter functionality
 	$('#school_filter').change(function() {
 		var schoolId = $(this).val();
 		if(schoolId) {
@@ -256,8 +153,9 @@ $(document).ready(function() {
 			$('#class_filter').prop('disabled', false);
 			filterStudents();
 		} else {
-			$('#class_filter').prop('disabled', true).html('<option value="">Select Class</option>');
-			$('#section_filter').prop('disabled', true).html('<option value="">Select Section</option>');
+			$('#class_filter').prop('disabled', true).html('<option value="">All Classes</option>');
+			$('#section_filter').prop('disabled', true).html('<option value="">All Sections</option>');
+			filterStudents();
 		}
 	});
 
@@ -269,18 +167,19 @@ $(document).ready(function() {
 			$('#section_filter').prop('disabled', false);
 			filterStudents();
 		} else {
-			$('#section_filter').prop('disabled', true).html('<option value="">Select Section</option>');
+			$('#section_filter').prop('disabled', true).html('<option value="">All Sections</option>');
+			filterStudents();
 		}
 	});
 
-	// Section filter change
+	// Section filter and sort change
 	$('#section_filter, #sort_by').change(function() {
 		filterStudents();
 	});
 
 	function loadClasses(schoolId) {
 		$.get('/api/schools/' + schoolId + '/classes', function(data) {
-			var html = '<option value="">Select Class</option>';
+			var html = '<option value="">All Classes</option>';
 			data.forEach(function(cls) {
 				html += `<option value="${cls.id}">${cls.name}</option>`;
 			});
@@ -290,7 +189,7 @@ $(document).ready(function() {
 
 	function loadSections(classId) {
 		$.get('/api/classes/' + classId + '/sections', function(data) {
-			var html = '<option value="">Select Section</option>';
+			var html = '<option value="">All Sections</option>';
 			data.forEach(function(section) {
 				html += `<option value="${section.id}">${section.name}</option>`;
 			});
@@ -299,7 +198,8 @@ $(document).ready(function() {
 	}
 
 	function filterStudents() {
-		showLoading();
+		$('#id-cards-container').html('<div class="text-center p-5"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Loading ID cards...</p></div>');
+		
 		var schoolId = $('#school_filter').val();
 		var classId = $('#class_filter').val();
 		var sectionId = $('#section_filter').val();
@@ -310,9 +210,11 @@ $(document).ready(function() {
 			class_id: classId,
 			section_id: sectionId,
 			sort_by: sortBy
-		}, function(data) {
+		})
+		.done(function(data) {
 			$('#id-cards-container').html(data);
-		}).fail(function() {
+		})
+		.fail(function() {
 			$('#id-cards-container').html('<div class="text-center p-5"><i class="fas fa-exclamation-circle text-danger fa-2x"></i><p class="mt-2">Error loading ID cards. Please try again.</p></div>');
 		});
 	}

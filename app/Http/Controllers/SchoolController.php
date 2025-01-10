@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
+use App\Models\Classes;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -60,7 +62,12 @@ class SchoolController extends Controller
     public function show($id)
     {
         $school = School::find($id);
-        return view('school-details', compact('school'));
+        $schoolId = $school->id;
+        $classes = Classes::where('school_id', $schoolId)->get();
+        $students = Student::whereHas('class', function($query) use ($schoolId) {
+            $query->where('school_id', $schoolId);
+        })->get();
+        return view('school-details', compact('school', 'classes', 'students'));
     }
     /**
      * Update the specified resource in storage.
