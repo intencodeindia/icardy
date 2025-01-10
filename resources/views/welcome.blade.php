@@ -224,23 +224,146 @@
 			</div>
 		</div>
 	</section>
-	<section class="process-section py-5 bg-light">
+	<section class="process-section py-5">
 		<div class="container">
 			<div class="section-header text-center mb-5">
 				<h6 class="text-primary fw-bold text-uppercase">How it works</h6>
-				<h2 class="display-5 fw-bold">Easy and Fast</h2>
-				<p class="lead text-muted">Customized ID cards for different user categories</p>
+				<h2 class="display-5 fw-bold">Simple 4-Step Process</h2>
+				<p class="lead text-muted">Get started with our ID card management system in minutes</p>
 			</div>
 			<div class="row g-4">
 				<div class="col-md-3">
-					<div class="process-item">
-						<i class="fas fa-user-graduate"></i>
-						<h4>Step 1</h4>
-						<p>Create an account</p>
+					<div class="process-item text-center">
+						<div class="process-icon bg-primary-soft mb-3">
+							<i class="fas fa-user-plus fa-2x"></i>
+						</div>
+						<h4>1. Register School</h4>
+						<p>Create your school account and verify your institution</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="process-item text-center">
+						<div class="process-icon bg-success-soft mb-3">
+							<i class="fas fa-users fa-2x"></i>
+						</div>
+						<h4>2. Add Users</h4>
+						<p>Import or add students, faculty, and staff details</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="process-item text-center">
+						<div class="process-icon bg-info-soft mb-3">
+							<i class="fas fa-id-card fa-2x"></i>
+						</div>
+						<h4>3. Design Cards</h4>
+						<p>Choose templates and customize ID card designs</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="process-item text-center">
+						<div class="process-icon bg-warning-soft mb-3">
+							<i class="fas fa-print fa-2x"></i>
+						</div>
+						<h4>4. Print & Manage</h4>
+						<p>Print ID cards and start managing access</p>
 					</div>
 				</div>
 			</div>
-		
+		</div>
+	</section>
+
+	<!-- Pricing Section -->
+	<section class="pricing-section py-5 bg-light" id="pricing">
+		<div class="container">
+			<div class="section-header text-center mb-5">
+				<h6 class="text-primary fw-bold text-uppercase">Pricing Plans</h6>
+				<h2 class="display-5 fw-bold">Choose Your Plan</h2>
+				<p class="lead text-muted">Affordable annual plans based on your student count</p>
+			</div>
+			<div class="row g-4 justify-content-center">
+				<div class="col-lg-4 col-md-6">
+					<div class="pricing-card">
+						<div class="pricing-header">
+							<h3>Starter</h3>
+							<div class="price">
+								<span class="currency">$</span>
+								<span class="amount">499</span>
+								<span class="period">/year</span>
+							</div>
+							<p>Up to 500 Students</p>
+						</div>
+						<div class="pricing-features">
+							<ul>
+								<li><i class="fas fa-check"></i> Basic ID Card Templates</li>
+								<li><i class="fas fa-check"></i> QR Code Integration</li>
+								<li><i class="fas fa-check"></i> Bulk Import</li>
+								<li><i class="fas fa-check"></i> Basic Analytics</li>
+								<li><i class="fas fa-check"></i> Email Support</li>
+								<li class="disabled"><i class="fas fa-times"></i> RFID Integration</li>
+								<li class="disabled"><i class="fas fa-times"></i> API Access</li>
+							</ul>
+						</div>
+						<div class="pricing-footer">
+							<a href="{{ route('register') }}" class="btn btn-outline-primary btn-lg w-100">Get Started</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="pricing-card popular">
+						<div class="popular-badge">Most Popular</div>
+						<div class="pricing-header">
+							<h3>Professional</h3>
+							<div class="price">
+								<span class="currency">$</span>
+								<span class="amount">999</span>
+								<span class="period">/year</span>
+							</div>
+							<p>Up to 2000 Students</p>
+						</div>
+						<div class="pricing-features">
+							<ul>
+								<li><i class="fas fa-check"></i> Advanced ID Card Templates</li>
+								<li><i class="fas fa-check"></i> QR Code Integration</li>
+								<li><i class="fas fa-check"></i> Bulk Import/Export</li>
+								<li><i class="fas fa-check"></i> Advanced Analytics</li>
+								<li><i class="fas fa-check"></i> Priority Support</li>
+								<li><i class="fas fa-check"></i> RFID Integration</li>
+								<li><i class="fas fa-check"></i> Basic API Access</li>
+							</ul>
+						</div>
+						<div class="pricing-footer">
+							<a href="{{ route('register') }}" class="btn btn-primary btn-lg w-100">Get Started</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="pricing-card">
+						<div class="pricing-header">
+							<h3>Enterprise</h3>
+							<div class="price">
+								<span class="currency">$</span>
+								<span class="amount">1999</span>
+								<span class="period">/year</span>
+							</div>
+							<p>Unlimited Students</p>
+						</div>
+						<div class="pricing-features">
+							<ul>
+								<li><i class="fas fa-check"></i> Custom ID Card Templates</li>
+								<li><i class="fas fa-check"></i> Advanced Integration Suite</li>
+								<li><i class="fas fa-check"></i> Advanced User Management</li>
+								<li><i class="fas fa-check"></i> Custom Analytics</li>
+								<li><i class="fas fa-check"></i> 24/7 Premium Support</li>
+								<li><i class="fas fa-check"></i> Full RFID Integration</li>
+								<li><i class="fas fa-check"></i> Complete API Access</li>
+							</ul>
+						</div>
+						<div class="pricing-footer">
+							<a href="{{ route('register') }}" class="btn btn-outline-primary btn-lg w-100">Contact Sales</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 
@@ -450,6 +573,115 @@
 	
 	.floating-form {
 		margin-bottom: 2rem;
+	}
+}
+
+/* Process Section Styles */
+.process-item {
+	background: white;
+	border-radius: 15px;
+	padding: 2rem;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+	transition: all 0.3s ease;
+}
+
+.process-icon {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+/* Pricing Section Styles */
+.pricing-card {
+	background: white;
+	border-radius: 20px;
+	padding: 2rem;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+	transition: all 0.3s ease;
+	position: relative;
+	border: 1px solid #eee;
+}
+
+.pricing-card.popular {
+	transform: scale(1.05);
+	border: 2px solid #0d6efd;
+}
+
+.popular-badge {
+	position: absolute;
+	top: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #0d6efd;
+	color: white;
+	padding: 5px 15px;
+	border-radius: 20px;
+	font-size: 0.8rem;
+}
+
+.pricing-header {
+	text-align: center;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid #eee;
+}
+
+.price {
+	margin: 1.5rem 0;
+}
+
+.price .currency {
+	font-size: 1.5rem;
+	vertical-align: top;
+}
+
+.price .amount {
+	font-size: 3.5rem;
+	font-weight: bold;
+}
+
+.price .period {
+	color: #6c757d;
+}
+
+.pricing-features {
+	padding: 2rem 0;
+}
+
+.pricing-features ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.pricing-features li {
+	margin-bottom: 1rem;
+	color: #6c757d;
+}
+
+.pricing-features li i {
+	margin-right: 0.5rem;
+	color: #198754;
+}
+
+.pricing-features li.disabled {
+	color: #adb5bd;
+}
+
+.pricing-features li.disabled i {
+	color: #dc3545;
+}
+
+.pricing-footer {
+	text-align: center;
+}
+
+@media (max-width: 991.98px) {
+	.pricing-card.popular {
+		transform: scale(1);
 	}
 }
 </style>

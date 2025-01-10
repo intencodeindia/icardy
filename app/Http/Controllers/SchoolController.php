@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
-use App\Models\Classes;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Classes;
+use App\Models\Student;
 
 class SchoolController extends Controller
 {
@@ -62,7 +62,7 @@ class SchoolController extends Controller
     public function show($id)
     {
         $school = School::find($id);
-        $schoolId = $school->id;
+        $schoolId = $id;
         $classes = Classes::where('school_id', $schoolId)->get();
         $students = Student::whereHas('class', function($query) use ($schoolId) {
             $query->where('school_id', $schoolId);

@@ -191,7 +191,7 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-12">
-						<ul class="nav nav-tabs" id="classTab" role="tablist">
+						<ul class="nav nav-tabs border-2" id="classTab" role="tablist">
 							@foreach($classes as $index => $class)
 							<li class="nav-item" role="presentation">
 								<button class="nav-link text-primary bg-transparent rounded-0 {{ $index === 0 ? 'active' : '' }}"
@@ -231,7 +231,7 @@
 													<p class="mb-0">{{ $student->registration_number }}</p>
 												</div>
 												<!-- Additional Info -->
-												<div class="info-list">
+												<div class="info-list text-center">
 													<div class="d-flex mb-2">
 														<i class="fa fa-user me-3 text-primary"></i>
 														<span>{{ $student->father_name }}</span>
@@ -247,11 +247,11 @@
 												</div>
 												<!-- Actions -->
 												<div class="text-end mt-3">
-													<a type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#edit-student-modal-{{ $student->id }}">
-														<i class="fa fa-edit me-2"></i>
+													<a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#edit-student-modal-{{ $student->id }}">
+														<i class="fa fa-edit me-2"></i>Edit
 													</a>
-													<a type="button" class="text-danger" onclick="event.preventDefault(); document.getElementById('delete-student-{{ $student->id }}').submit();">
-														<i class="fa fa-trash"></i>
+													<a type="button" class="btn btn-sm btn-danger" onclick="event.preventDefault(); document.getElementById('delete-student-{{ $student->id }}').submit();">
+														<i class="fa fa-trash"></i>Delete
 													</a>
 													<form id="delete-student-{{ $student->id }}" action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-none">
 														@csrf
